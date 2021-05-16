@@ -13,6 +13,7 @@ img {
   display: block;
   max-width: 100%;
   border-radius: 5px;
+  width: 100%;
 }
 
 a {
@@ -30,8 +31,8 @@ p {
   color: #b0b2b3;
 }
 
-
 .estrutura {
+  margin-top: 109px;
   display: grid;
   grid-template-columns: minmax(160px, 1fr) 3fr 300px;
   grid-template-areas:
@@ -40,18 +41,56 @@ p {
     "footer footer footer";
 }
 
+@media (max-width: 1200px) {
+  .estrutura {
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas:
+      "header header"
+      "sidenav content"
+      "sidenav anuncios"
+      "footer footer";
+  }
+}
+
+@media (max-width: 760px) {
+  .estrutura {
+    margin-top: 150px;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "header"
+      "sidenav"
+      "content"
+      "anuncios"
+      "footer";
+  }
+}
+
 .header {
   grid-area: header;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 30px;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  background: linear-gradient(135deg, #414040, #1b1d20, #1b1d20, #414040);
+  z-index: 1;
+  border-bottom: 1px solid #414040;
+  background: linear-gradient(
+    135deg,
+    #414040,
+    #1b1d20,
+    #1b1d20,
+    #1b1d20,
+    #414040
+  );
 }
 
 .logo {
   max-width: 200px;
 }
+
 .header nav ul {
   display: flex;
   flex-wrap: wrap;
@@ -75,6 +114,21 @@ p {
 
 .header nav ul li a:hover {
   background: #414040;
+}
+
+@media (max-width: 760px) {
+  .header {
+    grid-template-columns: auto;
+  }
+  .logo {
+    margin-bottom: 20px;
+  }
+  .header nav a {
+    font-size: 1em;
+  }
+  .header li + li {
+    margin-left: 10px;
+  }
 }
 
 .sidenav {
@@ -101,6 +155,45 @@ p {
   box-shadow: 0px 0px 15px rgba(240, 237, 237, 0.5);
 }
 
+@keyframes seta {
+  from {
+    right: 30px;
+  }
+  to {
+    right: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sidenav {
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .sidenav::after {
+    content: "→";
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    animation: seta 0.5s ease-in 0s infinite alternate;
+  }
+  .sidenav ul {
+    display: flex;
+  }
+  .sidenav li {
+    flex: 1 0 60px;
+  }
+  .sidenav {
+    padding: 0 30px;
+  }
+  .sidenav li a {
+    box-sizing: initial;
+    margin: 30px 30px 30px 0;
+  }
+}
+
 .content {
   grid-area: content;
   background: #1b1d20;
@@ -110,14 +203,22 @@ p {
   color: white;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 600px) {
+  .content {
+    grid-template-columns: auto;
+  }
 }
 
 .titulo h1 {
-  font-size: 3.7rem;
+  font-size: 3.75rem;
 }
 
 .titulo span {
   font-size: 0.875rem;
+  font-style: italic;
 }
 
 .caracteristicas {
@@ -125,23 +226,22 @@ p {
   gap: 2rem;
 }
 
-.caracteristicas div {
+.caracteristicas > div {
   position: relative;
   min-width: 80px;
   min-height: 80px;
   border-radius: 5px;
   overflow: hidden;
-
 }
 
 .caracteristicas .numero {
   display: block;
   font-size: 3rem;
   text-align: center;
-  background: linear-gradient(135deg, #414040, #a6aab1, #414040);
+  background: linear-gradient(135deg, #414040, #7c7d7e, #414040);
 }
 
-.caracteristicas .rotulo{
+.caracteristicas .rotulo {
   display: block;
   text-align: center;
   background: #414040;
@@ -155,17 +255,61 @@ p {
 .desc-wide {
   grid-column: 1 / 3;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+}
+
+.foto1 {
+  grid-row: span 2;
+  align-self: flex-end;
 }
 
 .desc-destaque {
   font-size: 0.875rem;
   color: #8844ee;
-  max-width: 16em;
+  max-width: 18em;
+  padding-top: 1rem;
+}
+
+.foto2 {
+  align-self: flex-end;
+}
+
+.citacao {
+  grid-column: 1 / 3;
+}
+
+.citacao p {
+  font-size: 1.5rem;
+  font-style: italic;
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  color: white;
+}
+
+.citacao,
+.atributos {
+  padding: 30px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #8844ee, #b07dfb);
+  box-shadow: 2px 2px 5px 0px rgba(240, 237, 237, 0.5);
+}
+
+.atributos li {
+  font-size: 1.125rem;
+  font-family: Courier, monospace;
+  padding: 15px;
+}
+
+.atributos li + li {
+  border-top: 2px solid #b07dfb;
 }
 
 .informacoes p + p {
   margin-bottom: 30px;
+}
+
+.foto3 {
+  grid-column: 1 / 3;
 }
 
 .anuncios {
@@ -194,6 +338,27 @@ p {
   background: #8844ee;
   border-radius: 50px;
 }
+
+@media (max-width: 1200px) {
+  .anuncios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: #1b1d20;
+  }
+}
+
 .footer {
   grid-area: footer;
+  border-top: 0.1px solid #414040;
+  padding: 30px;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    #414040,
+    #1b1d20,
+    #1b1d20,
+    #1b1d20,
+    #414040
+  );
 }
